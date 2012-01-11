@@ -46,7 +46,7 @@ object App {
     while (line != null) {
 
       transaction {
-        Library.leki.insert(new Lek(augmentString(line(0)).toLong, line(1), line(2)))
+        Library.leki.insert(new Lek(augmentString(line(0)).toLong, line(1), line(2), line(3), line(7), line(11), line(12)))
       }
       line = reader.readNext()
     }
@@ -70,10 +70,19 @@ class Lek(val id: Long,
           @Column(length = 500)
           var substancja: String,
           @Column(length = 500)
-          var nazwa: String) {
-  def this() = this (0, "", "")
+          var nazwa: String,
+          @Column(length = 500)
+          var opakowanie: String,
+          @Column(length = 500)
+          var grupa: String,
+          @Column(length = 500)
+          var wskazania: String,
+          @Column(length = 10)
+          var refundacja: String) {
+  def this() = this (0, "", "", "", "", "", "")
 
-  override def toString() = "Lek[id="+id+";substancja="+substancja+";nazwa="+nazwa+"]"
+  override def toString() = "Lek[id="+id+";substancja="+substancja+";nazwa="+nazwa+";opakowanie="+opakowanie+";grupa="+
+    grupa+";wskazania="+wskazania+";refundacja="+refundacja+"]"
 }
 
 object Library extends Schema {
