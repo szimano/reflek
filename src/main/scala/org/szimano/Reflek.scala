@@ -10,16 +10,28 @@ import event.ButtonClicked
 
 object Reflek extends SimpleSwingApplication {
   def top = new MainFrame {
-    title = "Reactive Swing App"
+    title = "Reflek"
     val button = new Button {
       text = "Click me"
     }
     val label = new Label {
       text = "No button clicks registered"
     }
+    val initial = Array(
+      Array("John", "Doe", "26"),
+      Array("Jim", "Smith", "55"),
+      Array("Robert", "Lang", "43"))
+
+    val names = Array("First name", "Last name", "Age")
+
+    var memTable = new Table(initial.asInstanceOf[Array[Array[Any]]], names.asInstanceOf[Array[Any]])
+
+    val scrollPane = new ScrollPane(memTable)
+
     contents = new BoxPanel(Orientation.Vertical) {
-      contents += button
       contents += label
+      contents += button
+      contents += scrollPane
       border = Swing.EmptyBorder(30, 30, 10, 30)
     }
     listenTo(button)
