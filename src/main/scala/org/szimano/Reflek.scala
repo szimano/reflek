@@ -1,9 +1,9 @@
 package org.szimano
 
 import scala.swing._
-import event.ButtonClicked
 
 import BazaLekow._
+import event._
 
 /**
  *
@@ -13,12 +13,16 @@ import BazaLekow._
 object Reflek extends SimpleSwingApplication {
   def top = new MainFrame {
     title = "Reflek"
-    val button = new Button {
-      text = "Click me"
-    }
+
     val label = new Label {
-      text = "No button clicks registered"
+      text = "Wyszukaj"
     }
+    
+    val button = new Button {
+      text = "Wyczyść"
+    }
+
+    val search = new TextField()
 
     val leki = readAll()
 
@@ -39,16 +43,40 @@ object Reflek extends SimpleSwingApplication {
 
     contents = new BoxPanel(Orientation.Vertical) {
       contents += label
+      contents += search
       contents += button
       contents += scrollPane
       border = Swing.EmptyBorder(30, 30, 10, 30)
     }
+    listenTo(search)
     listenTo(button)
+
     var nClicks = 0
     reactions += {
+      case ValueChanged(v) => {
+        val searchString = v.asInstanceOf[TextField].text;
+        val lekiWyszukane = searchLeki(searchString)
+        
+        var i = 0
+        for (lek <- lekiWyszukane) {
+          println(lek)
+          memTable.update(i, 0, lek.substancja)
+          memTable.update(i, 1, lek.nazwa)
+          memTable.update(i, 2, lek.opakowanie)
+          memTable.update(i, 3, lek.grupa)
+          memTable.update(i, 4, lek.wskazania)
+          memTable.update(i, 5, lek.refundacja)
+
+          i = i + 1
+        }
+
+        memTable.repaint()
+
+        println("updated")
+      }
       case ButtonClicked(b) =>
-        nClicks += 1
-        label.text = "Number of button clicks: " + nClicks
+        search.text = ""
     }
+    
   }
 }

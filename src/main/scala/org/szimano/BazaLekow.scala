@@ -66,6 +66,23 @@ object BazaLekow {
     lekiLista
   }
 
+  def searchLeki(s: String) = {
+    var leki: Query[Lek] = null
+
+    val lekiLista: ListBuffer[Lek] = ListBuffer()
+
+    transaction {
+      leki = from(Library.leki)(l => where(l.substancja like s) select (l))
+
+      for (l <- leki) {
+        println("ze srodka: "+l)
+        lekiLista += l
+      }
+    }
+
+    lekiLista
+  }
+
 
   def main(args: Array[String]) {
 
