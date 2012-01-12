@@ -3,6 +3,8 @@ package org.szimano
 import scala.swing._
 import event.ButtonClicked
 
+import BazaLekow._
+
 /**
  *
  * User: szimano
@@ -17,12 +19,19 @@ object Reflek extends SimpleSwingApplication {
     val label = new Label {
       text = "No button clicks registered"
     }
-    val initial = Array(
-      Array("John", "Doe", "26"),
-      Array("Jim", "Smith", "55"),
-      Array("Robert", "Lang", "43"))
 
-    val names = Array("First name", "Last name", "Age")
+    val leki = readAll()
+
+    val initial = new Array[Array[String]](leki.size)
+
+    var i = 0;
+
+    for (lek <- leki) {
+      initial(i) = Array(lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja)
+      i = i + 1
+    }
+    
+    val names = Array("Substancja", "Nazwa i postać", "Opakowanie", "Grupa", "Zakres", "Refundacja")
 
     var memTable = new Table(initial.asInstanceOf[Array[Array[Any]]], names.asInstanceOf[Array[Any]])
 
