@@ -42,20 +42,49 @@ object Reflek extends SimpleSwingApplication {
 
     var memTable = new Table(1, 2) {model = tableModel}
 
-
     val scrollPane = new ScrollPane(memTable)
+
+    val substancja = new Label() {
+      text = "Substancja:"
+    }
+    val nazwa = new Label() {
+      text = "Nazwa i postać:"
+    }
+    val opakowanie = new Label() {
+      text = "Opakowanie:"
+    }
+    val grupa = new Label() {
+      text = "Grupa:"
+    }
+    val zakres = new Label() {
+      text = "Zakres:"
+    }
+    val refundacja = new Label() {
+      text = "Refundacja:"
+    }
+
+    val opisLeku = new BoxPanel(Orientation.Vertical) {
+      contents += substancja
+      contents += nazwa
+      contents += opakowanie
+      contents += grupa
+      contents += zakres
+      contents += refundacja
+      xLayoutAlignment = java.awt.Component.LEFT_ALIGNMENT
+    }
 
     contents = new BoxPanel(Orientation.Vertical) {
       contents += label
       contents += search
       contents += button
       contents += scrollPane
+      contents += opisLeku
       border = Swing.EmptyBorder(30, 30, 10, 30)
     }
     listenTo(search)
     listenTo(button)
+    listenTo(memTable.selection)
 
-    var nClicks = 0
     reactions += {
       case ValueChanged(v) => {
         val searchString = v.asInstanceOf[TextField].text;
@@ -76,6 +105,18 @@ object Reflek extends SimpleSwingApplication {
       }
       case ButtonClicked(b) =>
         search.text = ""
+      case TableRowsSelected(table, range, adjusting) => {
+        val row = range.start;
+
+        if (row > 0) {
+          substancja.text = "Substancja: " + tableModel.getValueAt (row, 0)
+          nazwa.text = "Nazwa i postać: " + tableModel.getValueAt (row, 1)
+          opakowanie.text = "Opakowanie: " + tableModel.getValueAt (row, 2)
+          grupa.text = "Grupa: " + tableModel.getValueAt (row, 3)
+          zakres.text = "<html><span style='align: left;'>Zakres: " + tableModel.getValueAt (row, 4) + "</span></html>"
+          refundacja.text = "Refundacja: " + tableModel.getValueAt (row, 5)
+        }
+      }
     }
     
   }
