@@ -72,10 +72,16 @@ object BazaLekow {
     val lekiLista: ListBuffer[Lek] = ListBuffer()
 
     transaction {
-      leki = from(Library.leki)(l => where(l.substancja like s) select (l))
+      leki = from(Library.leki)(l => where(
+        (lower(l.substancja) like s) or
+        (lower(l.nazwa) like s) or
+        (lower(l.grupa) like s) or
+        (lower(l.opakowanie) like s) or
+        (lower(l.wskazania) like s) or
+        (lower(l.refundacja) like s)
+      ) select (l))
 
       for (l <- leki) {
-        println("ze srodka: "+l)
         lekiLista += l
       }
     }

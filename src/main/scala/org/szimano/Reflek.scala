@@ -4,6 +4,7 @@ import scala.swing._
 
 import BazaLekow._
 import event._
+import javax.swing.table.DefaultTableModel
 
 /**
  *
@@ -26,18 +27,21 @@ object Reflek extends SimpleSwingApplication {
 
     val leki = readAll()
 
-    val initial = new Array[Array[String]](leki.size)
+    var initial = new Array[Array[AnyRef]](leki.size)
 
     var i = 0;
 
     for (lek <- leki) {
-      initial(i) = Array(lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja)
+      initial(i) = Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja)
       i = i + 1
     }
     
-    val names = Array("Substancja", "Nazwa i postać", "Opakowanie", "Grupa", "Zakres", "Refundacja")
+    val names = Array[AnyRef]("Substancja", "Nazwa i postać", "Opakowanie", "Grupa", "Zakres", "Refundacja")
 
-    var memTable = new Table(initial.asInstanceOf[Array[Array[Any]]], names.asInstanceOf[Array[Any]])
+    val tableModel = new DefaultTableModel( initial, names )
+
+    var memTable = new Table(1, 2) {model = tableModel}
+
 
     val scrollPane = new ScrollPane(memTable)
 
@@ -55,24 +59,20 @@ object Reflek extends SimpleSwingApplication {
     reactions += {
       case ValueChanged(v) => {
         val searchString = v.asInstanceOf[TextField].text;
-        val lekiWyszukane = searchLeki(searchString)
-        
-        var i = 0
-        for (lek <- lekiWyszukane) {
-          println(lek)
-          memTable.update(i, 0, lek.substancja)
-          memTable.update(i, 1, lek.nazwa)
-          memTable.update(i, 2, lek.opakowanie)
-          memTable.update(i, 3, lek.grupa)
-          memTable.update(i, 4, lek.wskazania)
-          memTable.update(i, 5, lek.refundacja)
+        val lekiWyszukane = searchLeki("%"+searchString.toLowerCase+"%")
 
+        initial = new Array[Array[AnyRef]](lekiWyszukane.size)
+
+        var i = 0;
+
+        for (lek <- lekiWyszukane) {
+          initial(i) = Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja)
           i = i + 1
         }
 
-        memTable.repaint()
+        tableModel.setDataVector(initial, names)
 
-        println("updated")
+        memTable.repaint()
       }
       case ButtonClicked(b) =>
         search.text = ""
