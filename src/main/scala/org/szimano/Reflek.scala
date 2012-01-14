@@ -59,6 +59,9 @@ object Reflek extends SimpleSwingApplication {
     val zakres = new Label() {
       text = "Zakres:"
     }
+    zakres.horizontalTextPosition = Alignment.Left
+    zakres.horizontalAlignment = Alignment.Left
+
     val refundacja = new Label() {
       text = "Refundacja:"
     }
@@ -113,7 +116,7 @@ object Reflek extends SimpleSwingApplication {
           nazwa.text = "Nazwa i postać: " + tableModel.getValueAt (row, 1)
           opakowanie.text = "Opakowanie: " + tableModel.getValueAt (row, 2)
           grupa.text = "Grupa: " + tableModel.getValueAt (row, 3)
-          zakres.text = "<html><span style='align: left;'>Zakres: " + tableModel.getValueAt (row, 4) + "</span></html>"
+          zakres.text = "<html>Zakres: " + tableModel.getValueAt (row, 4) + "</html>"
           refundacja.text = "Refundacja: " + tableModel.getValueAt (row, 5)
         }
       }
