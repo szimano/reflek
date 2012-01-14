@@ -34,7 +34,7 @@ object BazaLekow {
 
   val leki = this.getClass.getResourceAsStream("/leki.csv");
 
-  val reader = new CSVReader(new InputStreamReader(leki))
+  val reader = new CSVReader(new InputStreamReader(leki, "UTF-8"))
 
   var line = reader.readNext()
 

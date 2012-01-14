@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel
  */
 
 object Reflek extends SimpleSwingApplication {
+  
   def top = new MainFrame {
     title = "Reflek"
 
