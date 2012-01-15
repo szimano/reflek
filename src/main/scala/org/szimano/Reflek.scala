@@ -100,6 +100,8 @@ object Reflek extends SimpleSwingApplication {
     listenTo(button)
     listenTo(memTable.selection)
     listenTo(search.keys)
+    listenTo(memTable.mouse.moves)
+    listenTo(search.mouse.moves)
 
     reactions += {
       case ValueChanged(v) => {
@@ -119,8 +121,10 @@ object Reflek extends SimpleSwingApplication {
         tableModel.setDataVector(initial, names)
 
         memTable.repaint()
-        memTable.selection.rows += (0, 0)
-        reloadDesc(0)
+        if (lekiWyszukane.size > 0) {
+          memTable.selection.rows += (0, 0)
+          reloadDesc(0)
+        }
       }
       case ButtonClicked(b) =>
         search.text = ""
@@ -135,6 +139,9 @@ object Reflek extends SimpleSwingApplication {
         if(key.id == 27) {
           search.text = ""
         }
+      }
+      case MouseEntered(source, point, modifiers) => {
+        source.requestFocus()
       }
     }
     
