@@ -180,11 +180,11 @@
                             <goal>launch4j</goal>
                         </goals>
                         <configuration>
-                            <icon>Drug-basket.ico</icon>
-                            <headerType>console</headerType>
+                            <headerType>gui</headerType>
                             <outfile>target/${artifactId}.exe</outfile>
                             <jar>target/${artifactId}-${version}-jar-with-dependencies.jar</jar>
                             <errTitle>${artifactId}</errTitle>
+                            <icon>src/main/resources/reflek.ico</icon>
                             <classPath>
                                 <mainClass>${main.class}</mainClass>
                                 <addDependencies>false</addDependencies>
