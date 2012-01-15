@@ -33,11 +33,12 @@ object Reflek extends SimpleSwingApplication {
     var i = 0;
 
     for (lek <- leki) {
-      initial(i) = Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja)
+      initial(i) = Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja,
+        lek.cena)
       i = i + 1
     }
     
-    val names = Array[AnyRef]("Substancja", "Nazwa i postać", "Opakowanie", "Grupa", "Zakres", "Refundacja")
+    val names = Array[AnyRef]("Substancja", "Nazwa i postać", "Opakowanie", "Grupa", "Zakres", "Refundacja", "Cena")
 
     val tableModel = new DefaultTableModel( initial, names ) {
       override def isCellEditable(x: Int, y: Int) = false
@@ -69,6 +70,10 @@ object Reflek extends SimpleSwingApplication {
       text = "Refundacja:"
     }
 
+    val cena = new Label() {
+      text = "Cena:"
+    }
+
     val opisLeku = new BoxPanel(Orientation.Vertical) {
       contents += substancja
       contents += nazwa
@@ -76,6 +81,7 @@ object Reflek extends SimpleSwingApplication {
       contents += grupa
       contents += zakres
       contents += refundacja
+      contents += cena
       xLayoutAlignment = java.awt.Component.LEFT_ALIGNMENT
     }
 
@@ -102,7 +108,8 @@ object Reflek extends SimpleSwingApplication {
         var i = 0;
 
         for (lek <- lekiWyszukane) {
-          initial(i) = Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja)
+          initial(i) = Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja,
+            lek.cena)
           i = i + 1
         }
 
@@ -122,6 +129,7 @@ object Reflek extends SimpleSwingApplication {
           grupa.text = "Grupa: " + tableModel.getValueAt (row, 3)
           zakres.text = "<html>Zakres: " + tableModel.getValueAt (row, 4) + "</html>"
           refundacja.text = "Refundacja: " + tableModel.getValueAt (row, 5)
+          cena.text = "Cena: " + tableModel.getValueAt (row, 6)
         }
       }
       case KeyPressed(component, key, modifier, location) => {

@@ -2,8 +2,12 @@ Scala playout
 
 compile with
 
-mvn clean install assembly:single
+mvn clean install
 
 run with
 
 java -jar target/refled-VERSION-with-dependencies.jar
+
+or
+
+the target/reflek.exe
