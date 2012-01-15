@@ -180,6 +180,7 @@
                             <goal>launch4j</goal>
                         </goals>
                         <configuration>
+                            <icon>Drug-basket.ico</icon>
                             <headerType>console</headerType>
                             <outfile>target/${artifactId}.exe</outfile>
                             <jar>target/${artifactId}-${version}-jar-with-dependencies.jar</jar>

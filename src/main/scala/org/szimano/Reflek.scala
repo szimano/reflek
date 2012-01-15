@@ -44,7 +44,10 @@ object Reflek extends SimpleSwingApplication {
       override def isCellEditable(x: Int, y: Int) = false
     }
 
-    var memTable = new Table(1, 2) {model = tableModel}
+    var memTable = new Table(1, 2) {
+      model = tableModel
+      selection.intervalMode = Table.IntervalMode.Single
+    }
 
     val scrollPane = new ScrollPane(memTable)
 
@@ -116,20 +119,16 @@ object Reflek extends SimpleSwingApplication {
         tableModel.setDataVector(initial, names)
 
         memTable.repaint()
+        memTable.selection.rows += (0, 0)
+        reloadDesc(0)
       }
       case ButtonClicked(b) =>
         search.text = ""
       case TableRowsSelected(table, range, adjusting) => {
-        val row = range.start;
+        if (!memTable.selection.cells.isEmpty) {
+          val row = memTable.selection.cells.head._1;
 
-        if (row > 0) {
-          substancja.text = "Substancja: " + tableModel.getValueAt (row, 0)
-          nazwa.text = "Nazwa i postać: " + tableModel.getValueAt (row, 1)
-          opakowanie.text = "Opakowanie: " + tableModel.getValueAt (row, 2)
-          grupa.text = "Grupa: " + tableModel.getValueAt (row, 3)
-          zakres.text = "<html>Zakres: " + tableModel.getValueAt (row, 4) + "</html>"
-          refundacja.text = "Refundacja: " + tableModel.getValueAt (row, 5)
-          cena.text = "Cena: " + tableModel.getValueAt (row, 6)
+          reloadDesc(row)
         }
       }
       case KeyPressed(component, key, modifier, location) => {
@@ -139,5 +138,16 @@ object Reflek extends SimpleSwingApplication {
       }
     }
     
+    def reloadDesc(row : Int) {
+      if (row >= 0) {
+        substancja.text = "Substancja: " + tableModel.getValueAt (row, 0)
+        nazwa.text = "Nazwa i postać: " + tableModel.getValueAt (row, 1)
+        opakowanie.text = "Opakowanie: " + tableModel.getValueAt (row, 2)
+        grupa.text = "Grupa: " + tableModel.getValueAt (row, 3)
+        zakres.text = "<html>Zakres: " + tableModel.getValueAt (row, 4) + "</html>"
+        refundacja.text = "Refundacja: " + tableModel.getValueAt (row, 5)
+        cena.text = "Cena: " + tableModel.getValueAt (row, 6)
+      }
+    }
   }
 }
