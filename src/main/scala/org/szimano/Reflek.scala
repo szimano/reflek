@@ -39,7 +39,9 @@ object Reflek extends SimpleSwingApplication {
     
     val names = Array[AnyRef]("Substancja", "Nazwa i postać", "Opakowanie", "Grupa", "Zakres", "Refundacja")
 
-    val tableModel = new DefaultTableModel( initial, names )
+    val tableModel = new DefaultTableModel( initial, names ) {
+      override def isCellEditable(x: Int, y: Int) = false
+    }
 
     var memTable = new Table(1, 2) {model = tableModel}
 
@@ -88,6 +90,7 @@ object Reflek extends SimpleSwingApplication {
     listenTo(search)
     listenTo(button)
     listenTo(memTable.selection)
+    listenTo(search.keys)
 
     reactions += {
       case ValueChanged(v) => {
@@ -119,6 +122,11 @@ object Reflek extends SimpleSwingApplication {
           grupa.text = "Grupa: " + tableModel.getValueAt (row, 3)
           zakres.text = "<html>Zakres: " + tableModel.getValueAt (row, 4) + "</html>"
           refundacja.text = "Refundacja: " + tableModel.getValueAt (row, 5)
+        }
+      }
+      case KeyPressed(component, key, modifier, location) => {
+        if(key.id == 27) {
+          search.text = ""
         }
       }
     }
