@@ -28,16 +28,9 @@ object Reflek extends SimpleSwingApplication {
 
     val leki = readAll()
 
-    var initial = new Array[Array[AnyRef]](leki.size)
+    var initial = leki.map(lek => Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania,
+      lek.refundacja, lek.cena))
 
-    var i = 0;
-
-    for (lek <- leki) {
-      initial(i) = Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja,
-        lek.cena)
-      i = i + 1
-    }
-    
     val names = Array[AnyRef]("Substancja", "Nazwa i postać", "Opakowanie", "Grupa", "Zakres", "Refundacja", "Cena")
 
     val tableModel = new DefaultTableModel( initial, names ) {
@@ -108,15 +101,8 @@ object Reflek extends SimpleSwingApplication {
         val searchString = v.asInstanceOf[TextField].text;
         val lekiWyszukane = searchLeki("%"+searchString.toLowerCase+"%")
 
-        initial = new Array[Array[AnyRef]](lekiWyszukane.size)
-
-        var i = 0;
-
-        for (lek <- lekiWyszukane) {
-          initial(i) = Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania, lek.refundacja,
-            lek.cena)
-          i = i + 1
-        }
+        initial = lekiWyszukane.map(lek => Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa,
+          lek.wskazania, lek.refundacja, lek.cena))
 
         tableModel.setDataVector(initial, names)
 

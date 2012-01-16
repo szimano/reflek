@@ -53,27 +53,16 @@ object BazaLekow {
   //*********************************** Init code ***************************
 
   def readAll() = {
-    var leki: Query[Lek] = null
-
-    val lekiLista: ListBuffer[Lek] = ListBuffer()
-
     transaction {
-      leki = from(Library.leki)(l => select (l))
+      val leki = from(Library.leki)(l => select (l))
 
-      for (l <- leki)
-        lekiLista += l
+      leki.toArray
     }
-
-    lekiLista
   }
 
   def searchLeki(s: String) = {
-    var leki: Query[Lek] = null
-
-    val lekiLista: ListBuffer[Lek] = ListBuffer()
-
     transaction {
-      leki = from(Library.leki)(l => where(
+      val leki = from(Library.leki)(l => where(
         (lower(l.substancja) like s) or
         (lower(l.nazwa) like s) or
         (lower(l.grupa) like s) or
@@ -82,12 +71,8 @@ object BazaLekow {
         (lower(l.refundacja) like s)
       ) select (l))
 
-      for (l <- leki) {
-        lekiLista += l
-      }
+      leki.toArray
     }
-
-    lekiLista
   }
 
 
