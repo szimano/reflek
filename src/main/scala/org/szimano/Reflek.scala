@@ -99,7 +99,7 @@ object Reflek extends SimpleSwingApplication {
     reactions += {
       case ValueChanged(v) => {
         val searchString = v.asInstanceOf[TextField].text;
-        val lekiWyszukane = searchLeki("%"+searchString.toLowerCase+"%")
+        val lekiWyszukane = searchLeki(searchString.toLowerCase.split(" ").toList)
 
         initial = lekiWyszukane.map(lek => Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa,
           lek.wskazania, lek.refundacja, lek.cena))

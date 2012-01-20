@@ -60,16 +60,17 @@ object BazaLekow {
     }
   }
 
-  def searchLeki(s: String) = {
+  def searchLeki(s: List[String]) = {
     transaction {
       val leki = from(Library.leki)(l => where(
-        (lower(l.substancja) like s) or
-        (lower(l.nazwa) like s) or
-        (lower(l.grupa) like s) or
-        (lower(l.opakowanie) like s) or
-        (lower(l.wskazania) like s) or
-        (lower(l.refundacja) like s)
-      ) select (l))
+        s.map("%"+_+"%").foldLeft(l.id === l.id or l.id === l.id)((c, str) => (c and
+        ((lower(l.substancja) like str) or
+        (lower(l.nazwa) like str) or
+        (lower(l.grupa) like str) or
+        (lower(l.opakowanie) like str) or
+        (lower(l.wskazania) like str) or
+        (lower(l.refundacja) like str)))
+      )) select (l))
 
       leki.toArray
     }
