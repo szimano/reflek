@@ -37,7 +37,7 @@ object Reflek extends SimpleSwingApplication {
       override def isCellEditable(x: Int, y: Int) = false
     }
 
-    var memTable = new Table(1, 2) {
+    val memTable = new Table(1, 2) {
       model = tableModel
       selection.intervalMode = Table.IntervalMode.Single
     }
