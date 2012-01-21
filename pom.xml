@@ -21,7 +21,7 @@
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scala.version>2.9.1</scala.version>
-        <main.class>org.szimano.Reflek</main.class>
+        <main.class>org.szimano.reflek.Reflek</main.class>
     </properties>
 
     <repositories>

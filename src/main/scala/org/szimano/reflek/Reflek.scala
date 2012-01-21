@@ -1,8 +1,8 @@
-package org.szimano
+package org.szimano.reflek
 
 import scala.swing._
 
-import BazaLekow._
+import org.szimano.service.BazaLekow._
 import event._
 import javax.swing.table.DefaultTableModel
 
@@ -12,14 +12,14 @@ import javax.swing.table.DefaultTableModel
  */
 
 object Reflek extends SimpleSwingApplication {
-  
+
   def top = new MainFrame {
     title = "Reflek"
 
     val label = new Label {
       text = "Wyszukaj"
     }
-    
+
     val button = new Button {
       text = "Wyczyść"
     }
@@ -130,7 +130,7 @@ object Reflek extends SimpleSwingApplication {
         source.requestFocus()
       }
     }
-    
+
     def reloadDesc(row : Int) {
       if (row >= 0) {
         substancja.text = "Substancja: " + tableModel.getValueAt (row, 0)
