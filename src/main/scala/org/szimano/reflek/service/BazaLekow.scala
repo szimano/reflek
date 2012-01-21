@@ -14,16 +14,14 @@ import org.szimano.reflek.entity.{ReflekEntities, Lek}
  * @author ${user.name}
  */
 
-object BazaLekow {
-
-  def foo(x: Array[String]) = x.foldLeft("")((a, b) => a + b)
+class BazaLekow(val sourceFile: String, val dbName: String) {
 
   //*********************************** Init code ***************************
   // initialize the DB
   Class.forName("org.h2.Driver")
 
   SessionFactory.concreteFactory = Some(() => Session.create(
-    java.sql.DriverManager.getConnection("jdbc:h2:mem:test1;DB_CLOSE_DELAY=-1"),
+    java.sql.DriverManager.getConnection("jdbc:h2:mem:"+dbName+";DB_CLOSE_DELAY=-1"),
     new H2Adapter
   ))
 
@@ -31,7 +29,7 @@ object BazaLekow {
     ReflekEntities.create
   }
 
-  val leki = this.getClass.getResourceAsStream("/leki.csv");
+  val leki = this.getClass.getResourceAsStream(sourceFile);
 
   val reader = new CSVReader(new InputStreamReader(leki, "UTF-8"))
 

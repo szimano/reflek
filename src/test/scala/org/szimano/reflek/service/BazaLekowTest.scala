@@ -5,6 +5,7 @@ import org.scalatest.GivenWhenThen
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.testng.TestNGSuite
+import org.szimano.service.BazaLekow
 
 /**
  * Integration test for BazaLekow
@@ -21,15 +22,23 @@ class BazaLekowTest extends FeatureSpec with GivenWhenThen {
 
     scenario("All drugs are queried") {
       given("non-empty db")
+      val bazaLekow = createNonEmpty("db-all-noempty");
+
       when("all drugs are queried")
+      val all = bazaLekow.readAll()
+
       then("all drugs should be returned")
-      pending
+      assert(!all.isEmpty)
     }
     scenario("All drugs are queried on an empty DB"){
       given("empty db")
+      val bazaLekow = createEmpty("db-all-empty");
+
       when("all drugs are queried")
+      val all = bazaLekow.readAll()
+
       then("no drugs should be returned")
-      pending
+      assert(all.isEmpty)
     }
     scenario("Drugs with one search token are queried"){
       given("non-empty db")
@@ -55,5 +64,17 @@ class BazaLekowTest extends FeatureSpec with GivenWhenThen {
       then("no drugs should be returned")
       pending
     }
+  }
+  
+  def createNonEmpty(dbName: String) = {
+    val bazaLekow = new BazaLekow("/leki-nonempty.csv", dbName)
+
+    bazaLekow
+  }
+
+  def createEmpty(dbName: String) = {
+    val bazaLekow = new BazaLekow("/leki-empty.csv", dbName)
+
+    bazaLekow
   }
 }

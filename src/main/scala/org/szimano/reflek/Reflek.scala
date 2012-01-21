@@ -2,9 +2,9 @@ package org.szimano.reflek
 
 import scala.swing._
 
-import org.szimano.service.BazaLekow._
 import event._
 import javax.swing.table.DefaultTableModel
+import org.szimano.service.BazaLekow
 
 /**
  *
@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel
  */
 
 object Reflek extends SimpleSwingApplication {
+
+  val bazaLekow = new BazaLekow("/leki.csv", "leki")
 
   def top = new MainFrame {
     title = "Reflek"
@@ -26,7 +28,7 @@ object Reflek extends SimpleSwingApplication {
 
     val search = new TextField()
 
-    val leki = readAll()
+    val leki = bazaLekow.readAll()
 
     var initial = leki.map(lek => Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa, lek.wskazania,
       lek.refundacja, lek.cena))
@@ -99,7 +101,7 @@ object Reflek extends SimpleSwingApplication {
     reactions += {
       case ValueChanged(v) => {
         val searchString = v.asInstanceOf[TextField].text;
-        val lekiWyszukane = searchLeki(searchString.toLowerCase.split(" ").toList)
+        val lekiWyszukane = bazaLekow.searchLeki(searchString.toLowerCase.split(" ").toList)
 
         initial = lekiWyszukane.map(lek => Array[AnyRef](lek.substancja, lek.nazwa, lek.opakowanie, lek.grupa,
           lek.wskazania, lek.refundacja, lek.cena))
