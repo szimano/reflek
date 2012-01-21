@@ -58,6 +58,10 @@ class BazaLekow(val sourceFile: String, val dbName: String) {
   }
 
   def searchLeki(s: List[String]) = {
+    if (s == null) {
+      throw new IllegalArgumentException("The list of tokens cannot be null")
+    }
+
     transaction {
       val leki = from(ReflekEntities.leki)(l => where(
         s.map("%"+_+"%").foldLeft(l.id === l.id or l.id === l.id)((c, str) => (c and
