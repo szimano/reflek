@@ -26,7 +26,7 @@ class Lek(val id: Long,
           var grupa: String,
           @Column(length = 500)
           var wskazania: String,
-          @Column(length = 10)
+          @Column(length = 1000)
           var refundacja: String,
           @Column(length = 10)
           var cena: String) {
