@@ -5,6 +5,7 @@ import scala.swing._
 import event._
 import javax.swing.table.DefaultTableModel
 import org.szimano.service.BazaLekow
+import version.VersionChecker
 
 /**
  *
@@ -145,4 +146,7 @@ object Reflek extends SimpleSwingApplication {
       }
     }
   }
+
+  // check version
+  new VersionChecker().checkVersion(top)
 }

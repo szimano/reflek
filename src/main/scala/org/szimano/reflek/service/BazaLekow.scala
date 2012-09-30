@@ -10,6 +10,7 @@ import java.io.InputStreamReader
 import org.squeryl.{Session, SessionFactory}
 import org.szimano.reflek.entity.{ReflekEntities, Lek}
 import annotation.tailrec
+import org.szimano.reflek.version.VersionChecker
 
 /**
  * @author ${user.name}
@@ -18,6 +19,7 @@ import annotation.tailrec
 class BazaLekow(val sourceFile: String, val dbName: String) {
 
   //*********************************** Init code ***************************
+
   // initialize the DB
   Class.forName("org.h2.Driver")
 

@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.szimano</groupId>
     <artifactId>reflek</artifactId>
-    <version>1-SNAPSHOT</version>
+    <version>2</version>
     <name>${project.artifactId}</name>
-    <description>My wonderfull scala app</description>
-    <inceptionYear>2010</inceptionYear>
+    <description>RefLek</description>
+    <inceptionYear>2011</inceptionYear>
     <licenses>
         <license>
-            <name>My License</name>
-            <url>http://....</url>
+            <name>Apache License</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -81,6 +81,13 @@
             <version>2.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.2.1</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>junit</groupId>
@@ -98,6 +105,12 @@
 
     <build>
         <sourceDirectory>src/main/scala</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <testSourceDirectory>src/test/scala</testSourceDirectory>
         <plugins>
             <plugin>
