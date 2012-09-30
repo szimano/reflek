@@ -6,6 +6,7 @@ import java.util.Properties
 import javax.swing.{JOptionPane, JFrame}
 import swing.MainFrame
 import java.io.InputStreamReader
+import org.szimano.reflek.browser.BrowserController
 
 
 class VersionChecker {
@@ -35,22 +36,7 @@ class VersionChecker {
         options,
         options(0)) == 1) {
 
-        openBrowser("http://szimano.org/reflek")
-      }
-    }
-  }
-
-  def openBrowser(url: String) = {
-
-    val desktop = java.awt.Desktop.getDesktop();
-
-    if( !desktop.isSupported( java.awt.Desktop.Action.BROWSE ) ) {
-      // just ignore
-    }
-    else {
-      try {
-        val uri = new java.net.URI(url);
-        desktop.browse( uri );
+        new BrowserController().openBrowser("http://szimano.org/reflek")
       }
     }
   }

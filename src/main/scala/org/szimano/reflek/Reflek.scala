@@ -1,11 +1,13 @@
 package org.szimano.reflek
 
+import browser.BrowserController
 import scala.swing._
 
 import event._
 import javax.swing.table.DefaultTableModel
 import org.szimano.service.BazaLekow
 import version.VersionChecker
+import javax.swing.JOptionPane
 
 /**
  *
@@ -18,6 +20,22 @@ object Reflek extends SimpleSwingApplication {
 
   def top = new MainFrame {
     title = "Reflek"
+
+    val menu = new Menu("Plik") {
+
+    }
+    menuBar = new MenuBar {
+      contents += new Menu("Program") {
+        contents += new MenuItem(Action("Strona Programu") {
+          new BrowserController().openBrowser("http://szimano.org/reflek")
+        })
+        contents += new MenuItem(Action("Licencja") {
+          new BrowserController().openBrowser("http://www.apache.org/licenses/LICENSE-2.0.html")
+        })
+        contents += new Separator
+        contents += new MenuItem(Action("Wyjdź") { sys.exit(0) })
+      }
+    }
 
     val label = new Label {
       text = "Wyszukaj"
